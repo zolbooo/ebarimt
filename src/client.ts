@@ -8,6 +8,7 @@ import {
   SendDataResponse,
   PutBillRequest,
   BatchBillRequest,
+  ReturnBillRequest,
 } from './types';
 
 export class EbarimtClient {
@@ -49,6 +50,16 @@ export class EbarimtClient {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ data: bill }),
+    }).then((res) => res.json());
+  }
+
+  returnBill(
+    data: ReturnBillRequest,
+  ): Promise<APIResponse<Record<string, never>, { errorCode: number }>> {
+    return fetch(`${this.url}/returnBill`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ data }),
     }).then((res) => res.json());
   }
 }

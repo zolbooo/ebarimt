@@ -306,3 +306,16 @@ export type PutResponse = APIResponse<
   },
   { errorCode: string }
 >;
+
+export type ReturnBillRequest = {
+  /**
+   * ID of bill to return
+   * @type Numeric string with 33 digits
+   */
+  returnBillId: string;
+  /**
+   * Bill's date of print
+   * @type Date string in format 'yyyy-MM-dd hh:mm:ss'
+   */
+  date: string;
+};
