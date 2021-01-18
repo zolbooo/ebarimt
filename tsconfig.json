@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "target": "es5",
+    "lib": ["esnext"],
+    "outDir": "lib",
+    "strict": true,
+    "module": "CommonJS",
+    "declaration": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "exclude": ["tests", "node_modules"],
+  "include": ["src/**/*.ts"]
+}
