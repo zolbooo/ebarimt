@@ -62,4 +62,8 @@ export class EbarimtClient {
       body: JSON.stringify({ data }),
     }).then((res) => res.json());
   }
+
+  sendData(): Promise<APIResponse<SendDataResponse>> {
+    return fetch(`${this.url}/sendData`).then((res) => res.json());
+  }
 }
