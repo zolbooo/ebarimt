@@ -4,6 +4,9 @@
   "description": "Node.js + Ebarimt integration",
   "main": "lib/index.js",
   "types": "lin/index.d.ts",
+  "files": [
+    "lib/"
+  ],
   "scripts": {
     "build": "npx tsc",
     "test": "npx jest",
