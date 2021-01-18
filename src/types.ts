@@ -16,3 +16,13 @@ export type SendDataResponse = APIResponse<
   Record<string, never>,
   { errorCode: number }
 >;
+
+export type PosInformation = {
+  registerNo: string;
+  branchNo: string;
+  posId: string;
+  dbDirPath: string;
+  extraInfo: {
+    countBill: number;
+  };
+};

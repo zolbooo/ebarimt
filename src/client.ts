@@ -1,6 +1,11 @@
 import fetch from 'node-fetch';
 
-import { APIResponse, CheckAPIResult, SendDataResponse } from './types';
+import {
+  APIResponse,
+  CheckAPIResult,
+  PosInformation,
+  SendDataResponse,
+} from './types';
 
 export class EbarimtClient {
   constructor(private url: string) {}
@@ -30,5 +35,9 @@ export class EbarimtClient {
     return fetch(`${this.url}/checkApi`).then((res) => res.json()) as Promise<
       APIResponse<CheckAPIResult>
     >;
+  }
+
+  getInformation(): Promise<PosInformation> {
+    return fetch(`${this.url}/getInformation`).then((res) => res.json());
   }
 }
