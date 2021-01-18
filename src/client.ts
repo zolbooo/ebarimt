@@ -1,10 +1,13 @@
 import fetch from 'node-fetch';
 
 import {
-  APIResponse,
   CheckAPIResult,
   PosInformation,
+  APIResponse,
+  PutResponse,
   SendDataResponse,
+  PutBillRequest,
+  BatchBillRequest,
 } from './types';
 
 export class EbarimtClient {
@@ -39,5 +42,13 @@ export class EbarimtClient {
 
   getInformation(): Promise<PosInformation> {
     return fetch(`${this.url}/getInformation`).then((res) => res.json());
+  }
+
+  put(bill: PutBillRequest | BatchBillRequest): Promise<PutResponse> {
+    return fetch(`${this.url}/put`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ data: bill }),
+    }).then((res) => res.json());
   }
 }
