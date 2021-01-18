@@ -27,10 +27,7 @@ export class EbarimtClient {
       !initialStatus.config.success &&
       initialStatus.config.message.startsWith('[100]')
     ) {
-      const sendDataResult: SendDataResponse = await fetch(
-        `${this.url}/sendData`,
-      ).then((res) => res.json());
-
+      const sendDataResult = await this.sendData();
       if (!sendDataResult.success) {
         return sendDataResult;
       }
