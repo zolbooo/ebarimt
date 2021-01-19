@@ -230,9 +230,11 @@ export type Bill = {
   invoiceId?: string;
   /**
    * Report month corresponding to current bill
+   *
+   * Should be set when BillType is ToOrg
    * @type Date string in format 'yyyy-MM'
    */
-  reportMonth: string;
+  reportMonth?: string;
   /**
    * Number of branch
    * @type Numeric string with 3 digits
