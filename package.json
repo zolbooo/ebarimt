@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Node.js + Ebarimt integration",
   "main": "lib/index.js",
-  "types": "lin/index.d.ts",
+  "types": "lib/index.d.ts",
   "files": [
     "lib/"
   ],
