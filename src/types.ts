@@ -29,7 +29,7 @@ export type PosInformation = {
 
 export enum BillType {
   ToCitizen = '1',
-  ToOrg = '2',
+  ToOrg = '3',
   Invoice = '5',
 }
 
