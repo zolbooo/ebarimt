@@ -227,7 +227,7 @@ export type Bill = {
    * ID of invoice corresponding to the current bill
    * @type Numeric string with 33 digits
    */
-  invoiceId: string;
+  invoiceId?: string;
   /**
    * Report month corresponding to current bill
    * @type Date string in format 'yyyy-MM'
