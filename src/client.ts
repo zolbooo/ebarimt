@@ -1,6 +1,7 @@
 import fetch from 'node-fetch';
 
 import {
+  InitError,
   CheckAPIResult,
   PosInformation,
   APIResponse,
@@ -14,27 +15,30 @@ import {
 export class EbarimtClient {
   constructor(private url: string) {}
 
-  async init(): Promise<APIResponse<CheckAPIResult, { errorCode?: number }>> {
-    const initialStatus: APIResponse<CheckAPIResult> = await fetch(
+  async init(): Promise<
+    ({ success: true } & CheckAPIResult) | { success: false; error: InitError }
+  > {
+    const initialStatus: CheckAPIResult = await fetch(
       `${this.url}/checkApi`,
     ).then((res) => res.json());
 
-    if (!initialStatus.success) {
+    if (initialStatus.success === false) {
       const shouldSendData =
         !initialStatus.config.success &&
         initialStatus.config.message.startsWith('[100]');
       if (!shouldSendData) {
-        return initialStatus;
+        return { success: false, error: { init: initialStatus } };
       }
       const sendDataResult = await this.sendData();
       if (!sendDataResult.success) {
-        return sendDataResult;
+        return { success: false, error: { sendData: sendDataResult } };
       }
     }
 
-    return fetch(`${this.url}/checkApi`).then((res) => res.json()) as Promise<
-      APIResponse<CheckAPIResult>
-    >;
+    const checkApiResult = await fetch(`${this.url}/checkApi`).then(
+      (res) => res.json() as Promise<CheckAPIResult>,
+    );
+    return { ...checkApiResult, success: true };
   }
 
   getInformation(): Promise<PosInformation> {

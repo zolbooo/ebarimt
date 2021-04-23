@@ -1,15 +1,22 @@
-export type APIResponse<Result, ErrorResult = Result> =
+export type APIResponse<Result, ErrorResult = { errorCode: number }> =
   | ({ success: true } & Result)
   | ({ message: string; success: false } & ErrorResult);
+export type ErrorResponse<T> = { success: false; message: string } & T;
 
 export type ServiceStatus =
   | { success: true }
   | { message: string; success: false };
 
 export type CheckAPIResult = {
+  success: boolean;
   config: ServiceStatus;
   database: ServiceStatus;
   network: ServiceStatus;
+};
+
+export type InitError = {
+  init?: CheckAPIResult;
+  sendData?: ErrorResponse<{ errorCode: number }>;
 };
 
 export type SendDataResponse = APIResponse<
