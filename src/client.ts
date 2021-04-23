@@ -20,13 +20,12 @@ export class EbarimtClient {
     ).then((res) => res.json());
 
     if (!initialStatus.success) {
-      return initialStatus;
-    }
-
-    if (
-      !initialStatus.config.success &&
-      initialStatus.config.message.startsWith('[100]')
-    ) {
+      const shouldSendData =
+        !initialStatus.config.success &&
+        initialStatus.config.message.startsWith('[100]');
+      if (!shouldSendData) {
+        return initialStatus;
+      }
       const sendDataResult = await this.sendData();
       if (!sendDataResult.success) {
         return sendDataResult;
