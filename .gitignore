@@ -5,3 +5,5 @@ lib/
 .vscode/
 
 .env
+
+.DS_Store
