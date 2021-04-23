@@ -44,14 +44,25 @@ export class EbarimtClient {
     return fetch(`${this.url}/getInformation`).then((res) => res.json());
   }
 
-  put(
+  async put(
     bill: PutBillRequest | BatchBillRequest,
   ): Promise<APIResponse<PutResponse>> {
-    return fetch(`${this.url}/put`, {
+    const response: APIResponse<PutResponse> = await fetch(`${this.url}/put`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ data: bill }),
     }).then((res) => res.json());
+
+    if (response.success && response.lotteryWarningMsg) {
+      const sendDataResponse = await this.sendData();
+      if (!sendDataResponse.success) {
+        console.warn(
+          `[${sendDataResponse.errorCode}] ${sendDataResponse.message}`,
+        );
+      }
+    }
+
+    return response;
   }
 
   returnBill(
