@@ -6,7 +6,6 @@ import {
   PosInformation,
   APIResponse,
   PutResponse,
-  SendDataResponse,
   PutBillRequest,
   BatchBillRequest,
   ReturnBillRequest,
@@ -45,7 +44,9 @@ export class EbarimtClient {
     return fetch(`${this.url}/getInformation`).then((res) => res.json());
   }
 
-  put(bill: PutBillRequest | BatchBillRequest): Promise<PutResponse> {
+  put(
+    bill: PutBillRequest | BatchBillRequest,
+  ): Promise<APIResponse<PutResponse>> {
     return fetch(`${this.url}/put`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -63,7 +64,9 @@ export class EbarimtClient {
     }).then((res) => res.json());
   }
 
-  sendData(): Promise<APIResponse<SendDataResponse>> {
+  sendData(): Promise<
+    APIResponse<Record<string, never>, { errorCode: string }>
+  > {
     return fetch(`${this.url}/sendData`).then((res) => res.json());
   }
 }

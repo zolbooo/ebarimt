@@ -1,4 +1,4 @@
-export type APIResponse<Result, ErrorResult = { errorCode: number }> =
+export type APIResponse<Result, ErrorResult = { errorCode: string }> =
   | ({ success: true } & Result)
   | ({ message: string; success: false } & ErrorResult);
 export type ErrorResponse<T> = { success: false; message: string } & T;
@@ -16,13 +16,8 @@ export type CheckAPIResult = {
 
 export type InitError = {
   init?: CheckAPIResult;
-  sendData?: ErrorResponse<{ errorCode: number }>;
+  sendData?: ErrorResponse<{ errorCode: string }>;
 };
-
-export type SendDataResponse = APIResponse<
-  Record<string, never>,
-  { errorCode: number }
->;
 
 export type PosInformation = {
   registerNo: string;
@@ -301,20 +296,17 @@ export type BatchBillRequest = {
   bills: BatchBill[];
 };
 
-export type PutResponse = APIResponse<
-  {
-    registerNo: string;
-    billId: string;
-    date: string;
-    macAddress: string;
-    internalCode: string;
-    billType: BillType;
-    qrData: string;
-    lottery: string;
-    lotteryWarningMsg?: string;
-  },
-  { errorCode: string }
->;
+export type PutResponse = {
+  registerNo: string;
+  billId: string;
+  date: string;
+  macAddress: string;
+  internalCode: string;
+  billType: BillType;
+  qrData: string;
+  lottery: string;
+  lotteryWarningMsg?: string;
+};
 
 export type ReturnBillRequest = {
   /**
