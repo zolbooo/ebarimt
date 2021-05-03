@@ -9,6 +9,7 @@ import {
   PutBillRequest,
   BatchBillRequest,
   ReturnBillRequest,
+  MerchantInfo,
 } from './types';
 
 export class EbarimtClient {
@@ -79,5 +80,31 @@ export class EbarimtClient {
     APIResponse<Record<string, never>, { errorCode: string }>
   > {
     return fetch(`${this.url}/sendData`).then((res) => res.json());
+  }
+
+  static async getOrganizationInfo(
+    regNo: string,
+  ): Promise<MerchantInfo | null> {
+    const response: {
+      vatpayerRegisteredDate: string;
+      lastReceiptDate: string | null;
+      receiptFound: boolean;
+      name: string;
+      found: boolean;
+      citypayer: boolean;
+      vatpayer: boolean;
+    } = await fetch(
+      `http://info.ebarimt.mn/rest/merchant/info?regno=${regNo}`,
+    ).then((res) => res.json());
+    if (!('found' in response) || !response.found) {
+      return null;
+    }
+    return {
+      name: response.name,
+      isVATPayer: response.vatpayer,
+      isCityTaxPayer: response.citypayer,
+      registeredDate: response.vatpayerRegisteredDate,
+      lastReceiptDate: response.lastReceiptDate,
+    };
   }
 }

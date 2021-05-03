@@ -320,3 +320,31 @@ export type ReturnBillRequest = {
    */
   date: string;
 };
+
+/**
+ * @summary MerchantInfo is response of corresponding query. Contains information about organization.
+ */
+export type MerchantInfo = {
+  /**
+   * Date when current merchant was registered as VAT payer.
+   * @type Date string in format 'yyyy-MM-dd'
+   */
+  registeredDate: string;
+  /**
+   * Date of latest receipt printed by current merchant.
+   * @type Date string in format 'yyyy-MM-dd'
+   */
+  lastReceiptDate: string | null;
+  /**
+   * Name of this organization
+   */
+  name: string;
+  /**
+   * Whether if this merchant pays city tax
+   */
+  isCityTaxPayer: boolean;
+  /**
+   * Whether if this merchant pays VAT
+   */
+  isVATPayer: boolean;
+};
