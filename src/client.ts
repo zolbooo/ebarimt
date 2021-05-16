@@ -82,6 +82,19 @@ export class EbarimtClient {
     return fetch(`${this.url}/sendData`).then((res) => res.json());
   }
 
+  /**
+   * Convert citizen register number to numeric string
+   * @param regNo Citizen's reg number
+   * @returns Converted reg number converted to the numeric value
+   */
+  convertCitizenRegNo(regNo: string): Promise<string> {
+    return fetch(`${this.url}/callFunction`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ functionName: 'toReg', data: regNo }),
+    }).then((res) => res.json());
+  }
+
   static async getOrganizationInfo(
     regNo: string,
   ): Promise<MerchantInfo | null> {
