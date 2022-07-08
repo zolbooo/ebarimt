@@ -1,0 +1,24 @@
+name: Type-Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install node v16
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - name: Install Node.js dependencies
+        run: npm ci
+      - name: Run tsc
+        run: npx tsc --noEmit
