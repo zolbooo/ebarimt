@@ -7,8 +7,17 @@ jobs:
   code-quality:
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/workflows/lint.yml
-      - uses: ./.github/workflows/type-check.yml
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      # type-check is not required, as publish stage is already using tsc
   publish:
     runs-on: ubuntu-latest
     needs:
