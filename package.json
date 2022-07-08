@@ -10,7 +10,8 @@
   "scripts": {
     "build": "npx tsc",
     "test": "npx jest",
-    "dev": "npx tsc-watch --onSuccess 'npm start'"
+    "dev": "npx tsc-watch --onSuccess 'npm start'",
+    "lint": "eslint src"
   },
   "repository": {
     "type": "git",
