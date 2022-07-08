@@ -13,14 +13,17 @@ import {
 } from './types';
 
 export class EbarimtClient {
-  constructor(private url: string) {}
+  constructor(
+    private url: string,
+    private headers: Record<string, string> = {},
+  ) {}
 
   async init(): Promise<
     ({ success: true } & CheckAPIResult) | { success: false; error: InitError }
   > {
-    const initialStatus: CheckAPIResult = await fetch(
-      `${this.url}/checkApi`,
-    ).then((res) => res.json());
+    const initialStatus: CheckAPIResult = await fetch(`${this.url}/checkApi`, {
+      headers: this.headers,
+    }).then((res) => res.json());
 
     if (initialStatus.success === false) {
       const shouldSendData =
@@ -35,14 +38,16 @@ export class EbarimtClient {
       }
     }
 
-    const checkApiResult = await fetch(`${this.url}/checkApi`).then(
-      (res) => res.json() as Promise<CheckAPIResult>,
-    );
+    const checkApiResult = await fetch(`${this.url}/checkApi`, {
+      headers: this.headers,
+    }).then((res) => res.json() as Promise<CheckAPIResult>);
     return { ...checkApiResult, success: true };
   }
 
   getInformation(): Promise<PosInformation> {
-    return fetch(`${this.url}/getInformation`).then((res) => res.json());
+    return fetch(`${this.url}/getInformation`, {
+      headers: this.headers,
+    }).then((res) => res.json());
   }
 
   async put(
@@ -50,7 +55,7 @@ export class EbarimtClient {
   ): Promise<APIResponse<PutResponse>> {
     const response: APIResponse<PutResponse> = await fetch(`${this.url}/put`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...this.headers },
       body: JSON.stringify({ data: bill }),
     }).then((res) => res.json());
 
@@ -71,7 +76,7 @@ export class EbarimtClient {
   ): Promise<APIResponse<Record<string, never>, { errorCode: number }>> {
     return fetch(`${this.url}/returnBill`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...this.headers },
       body: JSON.stringify({ data }),
     }).then((res) => res.json());
   }
@@ -79,7 +84,9 @@ export class EbarimtClient {
   sendData(): Promise<
     APIResponse<Record<string, never>, { errorCode: string }>
   > {
-    return fetch(`${this.url}/sendData`).then((res) => res.json());
+    return fetch(`${this.url}/sendData`, { headers: this.headers }).then(
+      (res) => res.json(),
+    );
   }
 
   /**
@@ -90,7 +97,7 @@ export class EbarimtClient {
   convertCitizenRegNo(regNo: string): Promise<string> {
     return fetch(`${this.url}/callFunction`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...this.headers },
       body: JSON.stringify({ functionName: 'toReg', data: regNo }),
     }).then((res) => res.json());
   }
@@ -108,6 +115,8 @@ export class EbarimtClient {
       vatpayer: boolean;
     } = await fetch(
       `http://info.ebarimt.mn/rest/merchant/info?regno=${regNo}`,
+      // This request do not use `url` option, so that we don't include commonHeaders in request
+      { headers: {} },
     ).then((res) => res.json());
     if (!('found' in response) || !response.found) {
       return null;
