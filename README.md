@@ -4,7 +4,7 @@
 
 ## Тохиргоо
 
-1. [endigo](https://gitlab.com/endigo/ebarimt) серверийн тохиргооны зааврыг харна уу 
+1. [endigo](https://gitlab.com/endigo/ebarimt) серверийн тохиргооны зааврыг харна уу
 2. Ebarimt санг татах: `npm install ebarimt`
 3. Ebarimt -ийн client загвар үүсгэх:
 
