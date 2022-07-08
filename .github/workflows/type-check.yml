@@ -9,8 +9,8 @@ on:
       - main
 
 jobs:
-  build:
-    name: build
+  type-check:
+    name: type-check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
