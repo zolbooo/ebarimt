@@ -7,8 +7,6 @@ jobs:
   code-quality:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
       - uses: ./.github/workflows/lint.yml
       - uses: ./.github/workflows/type-check.yml
   publish:
