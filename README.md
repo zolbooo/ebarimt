@@ -1,10 +1,10 @@
 # Ebarimt API
 
-Энэхүү сан нь https://gitlab.com/endigo/ebarimt сервертэй холбогдсон
+Энэхүү сан нь https://gitlab.com/zolbooflame/ebarimt сервертэй холбогдсон
 
 ## Тохиргоо
 
-1. [endigo](https://gitlab.com/endigo/ebarimt) серверийн тохиргооны зааврыг харна уу
+1. Cерверийн тохиргооны [зааврыг](https://gitlab.com/zolbooflame/ebarimt) харна уу
 2. Ebarimt санг татах: `npm install ebarimt`
 3. Ebarimt -ийн client загвар үүсгэх:
 
@@ -25,7 +25,7 @@ export const client = new EbarimtClient('http://localhost:8000');
 
 # Ebarimt API
 
-This library integrates with this server: https://gitlab.com/endigo/ebarimt
+This library integrates with this server: https://gitlab.com/zolbooflame/ebarimt
 
 ## Setup
 
